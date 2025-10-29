@@ -58,12 +58,12 @@ export const CalendarCell = memo<CalendarCellProps>(
       >
         <div className="flex justify-between items-start mb-1">
           {isToday ? (
-            <span className="w-7 h-7 bg-primary-500 rounded-full text-white text-sm flex items-center justify-center font-medium">
+            <span className="w-7 h-7 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full text-white text-sm flex items-center justify-center font-bold shadow-md">
               {dayNumber}
             </span>
           ) : (
             <span
-              className={clsx('text-sm font-medium', {
+              className={clsx('text-sm font-semibold', {
                 'text-neutral-900': isCurrentMonth,
                 'text-neutral-400': !isCurrentMonth,
               })}
@@ -78,8 +78,12 @@ export const CalendarCell = memo<CalendarCellProps>(
             <button
               key={event.id}
               onClick={(e) => handleEventClick(e, event.id)}
-              className="w-full text-left text-xs px-2 py-1 rounded truncate hover:opacity-80 transition-opacity focus-ring"
-              style={{ backgroundColor: event.color || '#3b82f6', color: '#ffffff' }}
+              className="w-full text-left text-xs px-2 py-1 rounded-md truncate hover:brightness-110 hover:scale-[1.02] transition-all focus-ring shadow-sm font-medium border border-white/20"
+              style={{ 
+                backgroundColor: event.color || '#3b82f6', 
+                color: '#ffffff',
+                textShadow: '0 1px 1px rgba(0,0,0,0.2)'
+              }}
               title={event.title}
             >
               {event.title}
@@ -88,7 +92,7 @@ export const CalendarCell = memo<CalendarCellProps>(
           {remainingCount > 0 && (
             <button
               onClick={handleClick}
-              className="text-xs text-primary-600 hover:underline focus-ring"
+              className="text-xs text-primary-600 hover:text-primary-700 hover:underline focus-ring font-semibold"
             >
               +{remainingCount} more
             </button>
