@@ -1,194 +1,143 @@
-# Calendar View Component
+# Calendar View
 
-An interactive calendar built with React, TypeScript, and Tailwind CSS. Supports both month and week views with full event management capabilities.
+A calendar app I built with React and TypeScript. It has month and week views where you can add, edit, and delete events.
 
-## Live Demo
-
-**Storybook**: [Add your deployed Storybook link here]
-
-## Features
-
-- Month View with 42-cell grid layout
-- Week View showing hourly time slots
-- Create, edit, and delete events
-- Responsive design works on mobile, tablet, and desktop
-- Keyboard navigation support
-- Built with TypeScript for type safety
-- Optimized rendering with React hooks
-- No external UI libraries - custom components only
-
-## 📦 Installation
+## Quick Start
 
 ```bash
-# Clone the repository
-git clone [your-repo-url]
-cd calendar-view-component
-
-# Install dependencies
 npm install
-
-# Run development server
 npm run dev
-
-# Run Storybook
-npm run storybook
-
-# Build for production
-npm run build
 ```
+
+Open http://localhost:5173 to see it running.
+
+## What It Does
+
+I built this as an interactive calendar where you can:
+- Switch between month view and week view
+- Click any day to create a new event
+- Click existing events to edit or delete them
+- Navigate months with previous/next/today buttons
+- See events displayed in different colors
+- Choose categories for your events
+
+The month view shows a standard calendar grid, and the week view breaks it down by hour so you can see your schedule for the week.
+
+## Tech Stack
+
+Built with React 18, TypeScript, Tailwind CSS, and Vite. I'm using date-fns for date handling since it's lightweight and works well with timezones.
+
+Full list:
+- React 18.2.0
+- TypeScript 5.3.3  
+- Tailwind CSS 3.4.0
+- Vite 5.0.8
+- date-fns 3.0.0
+- Storybook 7.6.6
 
 ## Project Structure
 
 ```
 src/
 ├── components/
-│   ├── Calendar/
-│   │   ├── CalendarView.tsx          # Main component
-│   │   ├── CalendarView.types.ts     # Type definitions
-│   │   ├── CalendarView.stories.tsx  # Storybook stories
-│   │   ├── MonthView.tsx             # Month grid view
-│   │   ├── WeekView.tsx              # Week time-slot view
-│   │   ├── CalendarCell.tsx          # Individual day cell
-│   │   └── EventModal.tsx            # Event create/edit modal
-│   └── primitives/
-│       ├── Button.tsx                # Reusable button
-│       ├── Modal.tsx                 # Base modal component
-│       ├── Input.tsx                 # Form input
-│       ├── Textarea.tsx              # Form textarea
-│       └── Select.tsx                # Form select dropdown
-├── hooks/
-│   ├── useCalendar.ts                # Calendar state management
-│   └── useEventManager.ts            # Event CRUD operations
-├── utils/
-│   ├── date.utils.ts                 # Date manipulation helpers
-│   └── event.utils.ts                # Event filtering & validation
-└── styles/
-    └── globals.css                   # Global styles & Tailwind
+│   ├── Calendar/          Main calendar components
+│   └── primitives/        Reusable UI elements (buttons, modals, etc)
+├── hooks/                 Custom React hooks
+├── utils/                 Helper functions for dates and events
+└── styles/                CSS and Tailwind config
 ```
 
-### Design Approach
+The architecture is pretty straightforward - components handle the UI, hooks manage state, and utilities do the heavy lifting with dates and event data.
 
-The calendar is split into small, reusable components. Business logic lives in custom hooks while utility functions handle date calculations. I focused on making it accessible with proper ARIA labels and keyboard support. Performance is handled through React's memoization hooks where needed.
-
-## Storybook Documentation
-
-I've created several stories to showcase different states:
-
-1. Default - Shows current month with some sample events
-2. Empty State - Clean calendar with no events
-3. Week View - Demonstrates the week layout
-4. Large Dataset - Tests performance with 20+ events
-5. Interactive Playground - Play around with all features
-
-## Technologies Used
-
-- React 18.2.0
-- TypeScript 5.3.3
-- Tailwind CSS 3.4.0
-- Vite 5.0.8 (for building)
-- Storybook 7.6.6 (for documentation)
-- date-fns 3.0.0 (date handling)
-- clsx 2.1.0 (class management)
-- zustand 4.4.7 (state management)
-
-## Usage Example
+## Quick Example
 
 ```tsx
-import { CalendarView } from '@/components/Calendar/CalendarView';
-import { useState } from 'react';
+import { CalendarView } from './components/Calendar/CalendarView';
 
 function App() {
   const [events, setEvents] = useState([]);
 
-  const handleEventAdd = (event) => {
-    setEvents([...events, { ...event, id: generateId() }]);
-  };
-
-  const handleEventUpdate = (id, updates) => {
-    setEvents(events.map(e => e.id === id ? { ...e, ...updates } : e));
-  };
-
-  const handleEventDelete = (id) => {
-    setEvents(events.filter(e => e.id !== id));
-  };
-
   return (
-    <CalendarView
-      events={events}
-      onEventAdd={handleEventAdd}
-      onEventUpdate={handleEventUpdate}
-      onEventDelete={handleEventDelete}
-      initialView="month"
+    <CalendarView 
+      events={events} 
+      onEventAdd={(e) => setEvents([...events, e])}
+      onEventUpdate={(id, updates) => setEvents(events.map(ev => 
+        ev.id === id ? {...ev, ...updates} : ev
+      ))}
+      onEventDelete={(id) => setEvents(events.filter(e => e.id !== id))}
     />
   );
 }
 ```
 
-### Event Data Structure
+## Features
 
-```tsx
-interface CalendarEvent {
-  id: string;
-  title: string;
-  description?: string;
-  startDate: Date;
-  endDate: Date;
-  color?: string;
-  category?: string;
-}
-```
+**Month View**
+- 42-cell grid showing full weeks
+- Current day highlighted
+- Shows up to 3 events per cell, with a "+X more" indicator
+- Days from previous/next months shown in gray
 
-## Keyboard Shortcuts
+**Week View**  
+- Hourly slots from 00:00 to 23:00
+- Events positioned by their actual time
+- Click any time slot to create an event
+- Today's column highlighted
 
-| Key | Action |
-|-----|--------|
-| `Tab` / `Shift+Tab` | Navigate between interactive elements |
-| `Arrow Keys` | Navigate calendar grid cells |
-| `Enter` / `Space` | Activate focused element |
-| `Escape` | Close modal or cancel action |
-| `Home` / `End` | Jump to first/last item |
+**Event Management**
+- Modal form for creating and editing
+- Title, description, start/end times
+- 8 color options to choose from
+- 6 categories (Meeting, Personal, Work, etc)
+- Validation to make sure dates make sense
 
-## Accessibility
+**Accessibility**
+- Keyboard navigation works throughout
+- Screen reader friendly with ARIA labels
+- Good color contrast
+- Focus indicators visible
 
-The calendar includes proper ARIA labels for screen readers, full keyboard navigation, and maintains logical focus order. Color contrast meets WCAG AA standards. Focus indicators are visible for keyboard users.
+## Development Challenges
 
-## Performance Notes
+A few things that were tricky to figure out:
 
-The bundle stays under 200KB gzipped. Initial render is fast thanks to React.memo on the calendar cells and memoized date calculations. Used useCallback and useMemo where it made sense to avoid unnecessary re-renders.
+**Calendar Grid Layout** - Getting the 42-cell grid to work right took some thinking. Had to calculate which days from the previous and next months to show so the weeks line up properly.
+
+**Week View Positioning** - Calculating where to place events on the hourly grid was interesting, especially when events overlap or span multiple hours.
+
+**Date Handling** - Making sure everything works with timezones and doesn't have weird edge cases. Using date-fns helped a lot here.
+
+**Performance** - With lots of events, rendering was getting slow. Added React.memo to the calendar cells and memoized some calculations which helped.
+
+**Keyboard Navigation** - Wanted to make sure you could navigate the whole calendar with just the keyboard. Took some work to get the focus management right.
+
+## What I'd Add Next
+
+Some features I think would be cool to add:
+- Drag and drop to move events around
+- Recurring events (daily, weekly, monthly)
+- Multiple calendars you can toggle on/off
+- Filter by category
+- Dark mode
+- LocalStorage to persist events
+- Export to iCal or Google Calendar
+- Mobile swipe gestures
+- Different view options (day view, agenda view)
+
+## Storybook
+
+Run `npm run storybook` to see the component documentation with interactive examples. I've set up stories for different states like empty calendar, busy schedule, edge cases, etc.
 
 ## Building
 
 ```bash
-npm run lint        # Check for errors
-npm run build       # Production build
-npm run preview     # Preview the build
+npm run build      # Creates production build
+npm run preview    # Preview the production build
+npm run lint       # Check for issues
 ```
 
-## Development Notes
+## Notes
 
-Some interesting challenges I ran into:
+This was built as part of a hiring assignment. The goal was to create a production-ready calendar component with clean code, good UX, and proper accessibility.
 
-- Generating the 42-cell grid that includes days from adjacent months took some thought
-- Positioning events in the week view, especially overlapping ones, required careful calculation
-- Making sure date handling works correctly with timezones using date-fns
-- Implementing keyboard navigation through the calendar grid while keeping it accessible
-- Keeping performance smooth when displaying lots of events
-
-Things I'd like to add later:
-- Drag and drop to reschedule events
-- Recurring events support  
-- Multiple calendar views
-- Filter events by category
-- Dark mode
-- Save events to localStorage
-- Export calendar to iCal format
-
-## License
-
-Created for a hiring assignment.
-
-## Contact
-
-Your Name  
-your.email@example.com  
-GitHub: @yourusername
+I focused on making it feel smooth and responsive while keeping the code maintainable. No massive dependencies - just a few well-chosen libraries and custom components for everything else.
