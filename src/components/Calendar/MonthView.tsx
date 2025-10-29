@@ -1,0 +1,66 @@
+import React, { memo, useMemo } from 'react';
+import { MonthViewProps } from './CalendarView.types';
+import { CalendarCell } from './CalendarCell';
+import { getCalendarGrid, isToday, isCurrentMonth, formatDate } from '@/utils/date.utils';
+import { getEventsForDate } from '@/utils/event.utils';
+
+const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+export const MonthView = memo<MonthViewProps>(
+  ({ currentDate, events, onDateClick, onEventClick, selectedDate }) => {
+    const calendarGrid = useMemo(() => getCalendarGrid(currentDate), [currentDate]);
+
+    const gridCells = useMemo(() => {
+      return calendarGrid.map(date => {
+        const dateEvents = getEventsForDate(events, date);
+        const isTodayFlag = isToday(date);
+        const isCurrentMonthFlag = isCurrentMonth(date, currentDate);
+        const isSelected = selectedDate
+          ? formatDate(date, 'yyyy-MM-dd') === formatDate(selectedDate, 'yyyy-MM-dd')
+          : false;
+
+        return {
+          date,
+          events: dateEvents,
+          isToday: isTodayFlag,
+          isCurrentMonth: isCurrentMonthFlag,
+          isSelected,
+        };
+      });
+    }, [calendarGrid, events, currentDate, selectedDate]);
+
+    return (
+      <div className="bg-white rounded-lg shadow-card overflow-hidden">
+        {/* Weekday headers */}
+        <div className="grid grid-cols-7 bg-neutral-50 border-b border-neutral-200">
+          {WEEKDAYS.map(day => (
+            <div
+              key={day}
+              className="py-3 px-2 text-center text-sm font-semibold text-neutral-700"
+            >
+              {day}
+            </div>
+          ))}
+        </div>
+
+        {/* Calendar grid */}
+        <div className="grid grid-cols-7">
+          {gridCells.map(({ date, events, isToday, isCurrentMonth, isSelected }) => (
+            <CalendarCell
+              key={date.toISOString()}
+              date={date}
+              events={events}
+              isToday={isToday}
+              isCurrentMonth={isCurrentMonth}
+              isSelected={isSelected}
+              onClick={onDateClick}
+              onEventClick={onEventClick}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+);
+
+MonthView.displayName = 'MonthView';
