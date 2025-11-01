@@ -1,7 +1,7 @@
-import React, { memo, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import clsx from 'clsx';
 import { WeekViewProps } from './CalendarView.types';
-import { getWeekDays, generateTimeSlots, formatDate, getEventPosition } from '@/utils/date.utils';
+import { getWeekDays, formatDate, getEventPosition } from '@/utils/date.utils';
 import { getEventsForDate } from '@/utils/event.utils';
 
 const HOURS = Array.from({ length: 24 }, (_, i) => i);

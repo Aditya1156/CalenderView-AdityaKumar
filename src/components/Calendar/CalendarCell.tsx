@@ -1,7 +1,7 @@
 import React, { memo, useCallback } from 'react';
 import clsx from 'clsx';
 import { CalendarCellProps } from './CalendarView.types';
-import { formatDate, isToday as isTodayCheck, isCurrentMonth as isCurrentMonthCheck } from '@/utils/date.utils';
+import { formatDate } from '@/utils/date.utils';
 
 export const CalendarCell = memo<CalendarCellProps>(
   ({ date, events, isToday, isCurrentMonth, isSelected, onClick, onEventClick }) => {

@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { MonthViewProps } from './CalendarView.types';
 import { CalendarCell } from './CalendarCell';
 import { getCalendarGrid, isToday, isCurrentMonth, formatDate } from '@/utils/date.utils';
