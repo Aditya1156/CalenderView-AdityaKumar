@@ -52,13 +52,13 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 p-4 md:p-8">
+    <div className="min-h-screen bg-neutral-50 p-2 sm:p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-neutral-900">
+        <div className="mb-4 sm:mb-6">
+          <h1 className="text-2xl sm:text-3xl font-bold text-neutral-900">
             Calendar View
           </h1>
-          <p className="text-neutral-600 mt-2">
+          <p className="text-sm sm:text-base text-neutral-600 mt-1 sm:mt-2">
             Interactive calendar with event management
           </p>
         </div>

@@ -46,7 +46,7 @@ export const CalendarCell = memo<CalendarCellProps>(
         }.`}
         aria-pressed={isSelected}
         className={clsx(
-          'border border-neutral-200 min-h-[120px] md:h-32 p-2',
+          'border border-neutral-200 min-h-[80px] sm:min-h-[100px] md:min-h-[120px] p-1.5 sm:p-2',
           'hover:bg-neutral-50 transition-colors cursor-pointer',
           'focus-ring',
           {
@@ -58,12 +58,12 @@ export const CalendarCell = memo<CalendarCellProps>(
       >
         <div className="flex justify-between items-start mb-1">
           {isToday ? (
-            <span className="w-7 h-7 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full text-white text-sm flex items-center justify-center font-bold shadow-md">
+            <span className="w-6 h-6 sm:w-7 sm:h-7 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full text-white text-xs sm:text-sm flex items-center justify-center font-bold shadow-md">
               {dayNumber}
             </span>
           ) : (
             <span
-              className={clsx('text-sm font-semibold', {
+              className={clsx('text-xs sm:text-sm font-semibold', {
                 'text-neutral-900': isCurrentMonth,
                 'text-neutral-400': !isCurrentMonth,
               })}
@@ -73,12 +73,12 @@ export const CalendarCell = memo<CalendarCellProps>(
           )}
         </div>
 
-        <div className="space-y-1 overflow-hidden">
+        <div className="space-y-0.5 sm:space-y-1 overflow-hidden">
           {visibleEvents.map(event => (
             <button
               key={event.id}
               onClick={(e) => handleEventClick(e, event.id)}
-              className="w-full text-left text-xs px-2 py-1 rounded-md truncate hover:brightness-110 hover:scale-[1.02] transition-all focus-ring shadow-sm font-medium border border-white/20"
+              className="w-full text-left text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded truncate hover:brightness-110 hover:scale-[1.02] transition-all focus-ring shadow-sm font-medium border border-white/20"
               style={{ 
                 backgroundColor: event.color || '#3b82f6', 
                 color: '#ffffff',
@@ -92,7 +92,7 @@ export const CalendarCell = memo<CalendarCellProps>(
           {remainingCount > 0 && (
             <button
               onClick={handleClick}
-              className="text-xs text-primary-600 hover:text-primary-700 hover:underline focus-ring font-semibold"
+              className="text-[10px] sm:text-xs text-primary-600 hover:text-primary-700 hover:underline focus-ring font-semibold"
             >
               +{remainingCount} more
             </button>

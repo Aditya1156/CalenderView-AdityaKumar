@@ -5,6 +5,7 @@ import { getCalendarGrid, isToday, isCurrentMonth, formatDate } from '@/utils/da
 import { getEventsForDate } from '@/utils/event.utils';
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const WEEKDAYS_SHORT = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
 export const MonthView = memo<MonthViewProps>(
   ({ currentDate, events, onDateClick, onEventClick, selectedDate }) => {
@@ -31,14 +32,15 @@ export const MonthView = memo<MonthViewProps>(
 
     return (
       <div className="bg-white rounded-lg shadow-card overflow-hidden">
-        {/* Weekday headers */}
+        {/* Weekday headers - Full names on desktop, single letter on mobile */}
         <div className="grid grid-cols-7 bg-neutral-50 border-b border-neutral-200">
-          {WEEKDAYS.map(day => (
+          {WEEKDAYS.map((day, index) => (
             <div
               key={day}
-              className="py-3 px-2 text-center text-sm font-semibold text-neutral-700"
+              className="py-2 sm:py-3 px-1 sm:px-2 text-center text-xs sm:text-sm font-semibold text-neutral-700"
             >
-              {day}
+              <span className="hidden sm:inline">{day}</span>
+              <span className="sm:hidden">{WEEKDAYS_SHORT[index]}</span>
             </div>
           ))}
         </div>

@@ -78,7 +78,7 @@ export const EventModal: React.FC<EventModalProps> = ({
       description={mode === 'create' ? 'Add a new event to your calendar' : 'Update event details'}
       size="lg"
     >
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
         <Input
           label="Title *"
           value={formData.title}
@@ -101,7 +101,7 @@ export const EventModal: React.FC<EventModalProps> = ({
           fullWidth
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <Input
             label="Start Date & Time *"
             type="datetime-local"
@@ -121,7 +121,7 @@ export const EventModal: React.FC<EventModalProps> = ({
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-1">
               Color *
@@ -132,7 +132,7 @@ export const EventModal: React.FC<EventModalProps> = ({
                   key={value}
                   type="button"
                   onClick={() => handleChange('color', value)}
-                  className={`w-full h-10 rounded-lg border-2 transition-all hover:scale-105 focus-ring ${
+                  className={`w-full h-9 sm:h-10 rounded-lg border-2 transition-all hover:scale-105 focus-ring ${
                     formData.color === value ? 'border-neutral-900 ring-2 ring-neutral-300' : 'border-neutral-200'
                   }`}
                   style={{ backgroundColor: value }}
@@ -152,23 +152,34 @@ export const EventModal: React.FC<EventModalProps> = ({
           />
         </div>
 
-        <div className="flex gap-3 pt-4 border-t border-neutral-200">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-3 sm:pt-4 border-t border-neutral-200">
           {mode === 'edit' && onDelete && (
             <Button
               type="button"
               variant="danger"
               onClick={handleDelete}
-              className="mr-auto"
+              className="sm:mr-auto w-full sm:w-auto"
             >
               Delete
             </Button>
           )}
-          <Button type="button" variant="ghost" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button type="submit" variant="primary">
-            {mode === 'create' ? 'Create Event' : 'Save Changes'}
-          </Button>
+          <div className="flex gap-2 sm:gap-3 sm:ml-auto">
+            <Button 
+              type="button" 
+              variant="ghost" 
+              onClick={onClose}
+              className="flex-1 sm:flex-none"
+            >
+              Cancel
+            </Button>
+            <Button 
+              type="submit" 
+              variant="primary"
+              className="flex-1 sm:flex-none"
+            >
+              {mode === 'create' ? 'Create Event' : 'Save Changes'}
+            </Button>
+          </div>
         </div>
       </form>
     </Modal>

@@ -19,28 +19,28 @@ export const WeekView = memo<WeekViewProps>(
     return (
       <div className="bg-white rounded-lg shadow-card overflow-hidden">
         <div className="overflow-x-auto">
-          <div className="min-w-[700px]">
+          <div className="min-w-[500px] sm:min-w-[700px]">
             {/* Header with dates */}
-            <div className="grid grid-cols-[60px_repeat(7,1fr)] border-b-2 border-neutral-200 bg-gradient-to-b from-neutral-50 to-white sticky top-0 z-20">
-              <div className="p-3" />
+            <div className="grid grid-cols-[40px_repeat(7,1fr)] sm:grid-cols-[60px_repeat(7,1fr)] border-b-2 border-neutral-200 bg-gradient-to-b from-neutral-50 to-white sticky top-0 z-20">
+              <div className="p-2 sm:p-3" />
               {weekDays.map(date => {
                 const isToday = new Date().toDateString() === date.toDateString();
                 return (
                   <div
                     key={date.toISOString()}
                     className={clsx(
-                      'p-3 text-center border-l border-neutral-200 transition-colors',
+                      'p-2 sm:p-3 text-center border-l border-neutral-200 transition-colors',
                       isToday && 'bg-primary-50'
                     )}
                   >
                     <div className={clsx(
-                      'text-sm font-semibold',
+                      'text-xs sm:text-sm font-semibold',
                       isToday ? 'text-primary-600' : 'text-neutral-700'
                     )}>
                       {formatDate(date, 'EEE')}
                     </div>
                     <div className={clsx(
-                      'text-xs mt-0.5',
+                      'text-[10px] sm:text-xs mt-0.5',
                       isToday ? 'text-primary-500 font-medium' : 'text-neutral-500'
                     )}>
                       {formatDate(date, 'MMM d')}
@@ -55,10 +55,10 @@ export const WeekView = memo<WeekViewProps>(
               {HOURS.map(hour => (
                 <div
                   key={hour}
-                  className="grid grid-cols-[60px_repeat(7,1fr)] border-b border-neutral-100 hover:bg-neutral-50/50 transition-colors"
-                  style={{ height: '60px' }}
+                  className="grid grid-cols-[40px_repeat(7,1fr)] sm:grid-cols-[60px_repeat(7,1fr)] border-b border-neutral-100 hover:bg-neutral-50/50 transition-colors"
+                  style={{ height: '50px' }}
                 >
-                  <div className="p-2 text-xs text-neutral-500 text-right pr-3 font-medium bg-neutral-50/50">
+                  <div className="p-1 sm:p-2 text-[10px] sm:text-xs text-neutral-500 text-right pr-2 sm:pr-3 font-medium bg-neutral-50/50">
                     {hour.toString().padStart(2, '0')}:00
                   </div>
                   {weekDays.map(date => {
@@ -81,7 +81,7 @@ export const WeekView = memo<WeekViewProps>(
                                 event.startDate,
                                 event.endDate
                               );
-                              const offsetTop = top % 60;
+                              const offsetTop = top % 50;
 
                               return (
                                 <button
@@ -91,8 +91,8 @@ export const WeekView = memo<WeekViewProps>(
                                     onEventClick(event);
                                   }}
                                   className={clsx(
-                                    'absolute left-1 right-1 rounded-md px-2 py-1.5',
-                                    'text-xs font-semibold',
+                                    'absolute left-0.5 right-0.5 sm:left-1 sm:right-1 rounded px-1 py-0.5 sm:px-2 sm:py-1.5',
+                                    'text-[10px] sm:text-xs font-semibold',
                                     'hover:brightness-110 hover:scale-[1.02] transition-all',
                                     'focus-ring overflow-hidden shadow-md border border-white/20'
                                   )}
@@ -101,7 +101,7 @@ export const WeekView = memo<WeekViewProps>(
                                     color: '#ffffff',
                                     textShadow: '0 1px 2px rgba(0,0,0,0.3)',
                                     top: `${offsetTop}px`,
-                                    height: `${Math.min(height, 180)}px`,
+                                    height: `${Math.min(height, 150)}px`,
                                   }}
                                   title={`${event.title}\n${formatDate(
                                     event.startDate,
@@ -109,7 +109,7 @@ export const WeekView = memo<WeekViewProps>(
                                   )} - ${formatDate(event.endDate, 'HH:mm')}`}
                                 >
                                   <div className="truncate font-bold">{event.title}</div>
-                                  <div className="text-[10px] font-medium mt-0.5" style={{ opacity: 0.95 }}>
+                                  <div className="hidden sm:block text-[10px] font-medium mt-0.5" style={{ opacity: 0.95 }}>
                                     {formatDate(event.startDate, 'HH:mm')} - {formatDate(event.endDate, 'HH:mm')}
                                   </div>
                                 </button>
